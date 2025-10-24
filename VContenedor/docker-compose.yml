@@ -1,0 +1,42 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: telcox-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "Admin*123"
+      MYSQL_DATABASE: TelcoX_BSS
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./telcox-mysql/init:/docker-entrypoint-initdb.d:ro
+
+  api:
+    build: ./telcox-api
+    image: telcox-api:1.0
+    container_name: telcox-api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: "Admin*123"
+      DB_NAME: TelcoX_BSS
+    volumes:
+      - ./telcox-api/app:/app
+      
+  frontend:
+    build:
+      context: ./telcox-frontend
+      dockerfile: Dockerfile
+    image: telcox-frontend:1.0
+    container_name: telcox-frontend
+    ports:
+      - "4200:80"  # mapea el 80 interno de Nginx al 4200 externo
+    depends_on:
+      - api
+
+volumes:
+  db_data:
