@@ -1,0 +1,33 @@
+# ===============================
+# ARCHIVO .GITIGNORE GLOBAL
+# ===============================
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Configuraciones locales
+.env
+*.log
+.vscode/
+.idea/
+
+# Carpeta de dependencias o builds
+node_modules/
+dist/
+
+# Archivos temporales de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de Docker
+*.pid
+*.sock
+*.tmp
+
+# Archivos de backup o dumps
+*.bak
+*.sql
+*.sqlite3
